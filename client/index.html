@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BareSober — Premium Skincare for Your Best Skin</title>
+  <meta name="description"
+    content="Discover BareSober's scientifically formulated skincare range. Serums, face washes, moisturizers, and more — crafted for every skin type.">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+
+  <!-- ─── Header ─── -->
+  <header class="header" id="main-header">
+    <div class="container">
+      <nav class="nav">
+        <a href="/" class="logo">Bare<span>Sober</span></a>
+        <ul class="nav-links">
+          <li><a href="/" data-page="home" class="active">Home</a></li>
+          <li><a href="/products.html" data-page="products">Shop</a></li>
+          <li><a href="/bulk-order.html" data-page="bulk">Bulk Order</a></li>
+        </ul>
+        <div class="nav-actions">
+          <a href="/products.html" class="nav-icon" title="Search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.35-4.35" />
+            </svg>
+          </a>
+          <a href="/profile.html?tab=wishlist" class="nav-icon" title="Wishlist">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path
+                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z" />
+            </svg>
+          </a>
+          <button class="nav-icon" id="cart-icon" title="Cart">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <path d="M16 10a4 4 0 0 1-8 0" />
+            </svg>
+            <span class="badge cart-count" style="display:none">0</span>
+          </button>
+          <a href="/auth.html" class="nav-icon" id="nav-auth-link" title="Login">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+          </a>
+          <a href="/profile.html" class="nav-icon" id="nav-profile-link" title="Profile" style="display:none">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+          </a>
+        </div>
+        <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <div class="mobile-close" id="mobile-close">✕</div>
+    <a href="/">Home</a>
+    <a href="/products.html">Shop All</a>
+    <a href="/bulk-order.html">Bulk Order</a>
+    <a href="/auth.html">Login</a>
+  </div>
+
+  <!-- ─── Marquee ─── -->
+  <div class="marquee-banner" style="position:fixed;top:80px;left:0;right:0;z-index:999">
+    <div class="marquee-track">
+      <span class="marquee-item">Free shipping on orders above ₹499 <span class="marquee-dot"></span></span>
+      <span class="marquee-item">100% natural ingredients <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Dermatologist tested & approved <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Cruelty free & vegan <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Free shipping on orders above ₹499 <span class="marquee-dot"></span></span>
+      <span class="marquee-item">100% natural ingredients <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Dermatologist tested & approved <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Cruelty free & vegan <span class="marquee-dot"></span></span>
+    </div>
+  </div>
+
+  <!-- ─── Hero Section ─── -->
+  <main style="padding-top:42px">
+    <section
+      style="min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:4vw;padding:calc(80px + 80px) clamp(16px,5vw,80px) 80px;max-width:1280px;margin:0 auto">
+      <div class="hero-content fade-in-up">
+        <div class="hero-eyebrow">✦ New Collection 2024</div>
+        <h1 class="hero-title">Skin That Speaks<br><em>Bare Truth</em></h1>
+        <p class="hero-body">Science-backed skincare formulated with pure, potent ingredients. Transform your routine,
+          transform your skin.</p>
+        <div class="hero-ctas">
+          <a href="/products.html" class="btn btn-primary btn-lg">Shop Collection</a>
+          <a href="/products.html?featured=true" class="btn btn-outline btn-lg">See Featured</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item"><span class="stat-number">50K+</span><span class="stat-label">Happy Customers</span>
+          </div>
+          <div class="stat-item"><span class="stat-number">4.8★</span><span class="stat-label">Average Rating</span>
+          </div>
+          <div class="stat-item"><span class="stat-number">30+</span><span class="stat-label">Products</span></div>
+        </div>
+      </div>
+      <div class="hero-image-wrap">
+        <div style="position:relative;display:flex;justify-content:center">
+          <div
+            style="width:min(460px,100%);aspect-ratio:3/4;background:linear-gradient(135deg,#f0ebe1,#e8ddd0);border-radius:var(--radius-xl);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-xl)">
+            <div style="text-align:center;color:var(--mid-gray)">
+              <div style="font-size:5rem;margin-bottom:16px">🌿</div>
+              <div style="font-family:var(--font-serif);font-size:1.5rem;color:var(--charcoal)">BareSober</div>
+              <div style="font-size:.875rem;margin-top:8px">Premium Skincare</div>
+            </div>
+          </div>
+          <div class="hero-image-float top" style="animation:float 4s ease-in-out infinite">
+            <div class="float-icon">✨</div>
+            <div class="float-text"><span class="float-label">Skin Brightening</span><span class="float-value">Vitamin C
+                Serum</span></div>
+          </div>
+          <div class="hero-image-float bottom" style="animation:float 4s ease-in-out infinite;animation-delay:2s">
+            <div class="float-icon">💧</div>
+            <div class="float-text"><span class="float-label">Deep Hydration</span><span class="float-value">Hyaluronic
+                HA</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Brand Strip ─── -->
+    <section
+      style="background:var(--cream-dark);padding:40px 0;border-top:1px solid var(--border-light);border-bottom:1px solid var(--border-light)">
+      <div class="container">
+        <div
+          style="display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;text-align:center">
+          <div style="flex:1;min-width:140px">
+            <div style="font-size:1.75rem;margin-bottom:6px">🌱</div>
+            <div style="font-weight:700;font-size:.9375rem">100% Natural</div>
+            <div style="font-size:.8125rem;color:var(--light-gray)">Pure ingredients</div>
+          </div>
+          <div style="flex:1;min-width:140px">
+            <div style="font-size:1.75rem;margin-bottom:6px">🧪</div>
+            <div style="font-weight:700;font-size:.9375rem">Science-Backed</div>
+            <div style="font-size:.8125rem;color:var(--light-gray)">Clinically tested</div>
+          </div>
+          <div style="flex:1;min-width:140px">
+            <div style="font-size:1.75rem;margin-bottom:6px">🐰</div>
+            <div style="font-weight:700;font-size:.9375rem">Cruelty-Free</div>
+            <div style="font-size:.8125rem;color:var(--light-gray)">Vegan friendly</div>
+          </div>
+          <div style="flex:1;min-width:140px">
+            <div style="font-size:1.75rem;margin-bottom:6px">🚚</div>
+            <div style="font-weight:700;font-size:.9375rem">Free Shipping</div>
+            <div style="font-size:.8125rem;color:var(--light-gray)">On orders ₹499+</div>
+          </div>
+          <div style="flex:1;min-width:140px">
+            <div style="font-size:1.75rem;margin-bottom:6px">↩️</div>
+            <div style="font-weight:700;font-size:.9375rem">Easy Returns</div>
+            <div style="font-size:.8125rem;color:var(--light-gray)">7-day policy</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Featured Products ─── -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header" data-reveal>
+          <div class="section-eyebrow">✦ Bestsellers</div>
+          <h2 class="section-title">Products Your Skin <span class="highlight">Will Love</span></h2>
+          <p class="section-body">Our most-loved formulas, tried and trusted by thousands.</p>
+          <div class="divider-line"></div>
+        </div>
+        <div class="products-grid" id="featured-products-grid">
+          <div class="loading-overlay" style="grid-column:1/-1">
+            <div class="spinner"></div>
+          </div>
+        </div>
+        <div style="text-align:center;margin-top:40px" data-reveal>
+          <a href="/products.html" class="btn btn-outline btn-lg">View All Products</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Category Section ─── -->
+    <section class="section" style="background:var(--cream-dark)">
+      <div class="container">
+        <div class="section-header" data-reveal>
+          <div class="section-eyebrow">✦ Browse By Category</div>
+          <h2 class="section-title">Shop Your <span class="highlight">Skin Concern</span></h2>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:16px">
+          <a href="/products.html?category=serum" class="cat-card">
+            <div style="font-size:2rem;margin-bottom:8px">&#x1F4A7;</div>
+            <div style="font-weight:700">Serum</div>
+          </a>
+          <a href="/products.html?category=face-wash" class="cat-card">
+            <div style="font-size:2rem;margin-bottom:8px">&#x1FAEA;</div>
+            <div style="font-weight:700">Face Wash</div>
+          </a>
+          <a href="/products.html?category=moisturizer" class="cat-card">
+            <div style="font-size:2rem;margin-bottom:8px">&#x2728;</div>
+            <div style="font-weight:700">Moisturizer</div>
+          </a>
+          <a href="/products.html?category=toner" class="cat-card">
+            <div style="font-size:2rem;margin-bottom:8px">&#x1F33F;</div>
+            <div style="font-weight:700">Toner</div>
+          </a>
+          <a href="/products.html?category=sunscreen" class="cat-card">
+            <div style="font-size:2rem;margin-bottom:8px">&#x2600;&#xFE0F;</div>
+            <div style="font-weight:700">Sunscreen</div>
+          </a>
+          <a href="/products.html?category=mask" class="cat-card">
+            <div style="font-size:2rem;margin-bottom:8px">&#x1F343;</div>
+            <div style="font-weight:700">Face Mask</div>
+          </a>
+        </div>
+        <style>
+          .cat-card {
+            display: block;
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 24px 16px;
+            text-align: center;
+            border: 1px solid var(--border-light);
+            transition: all var(--transition);
+            color: var(--charcoal);
+            text-decoration: none
+          }
+
+          .cat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md)
+          }
+        </style>
+      </div>
+    </section>
+
+    <!-- ─── Best Sellers ─── -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header" data-reveal>
+          <div class="section-eyebrow">✦ Customer Favorites</div>
+          <h2 class="section-title">Best <span class="highlight">Sellers</span></h2>
+        </div>
+        <div class="products-grid" id="bestseller-grid">
+          <div class="loading-overlay" style="grid-column:1/-1">
+            <div class="spinner"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Offer Banner ─── -->
+    <section
+      style="background:linear-gradient(135deg,var(--charcoal) 0%,#3d2b1a 100%);padding:80px 0;text-align:center">
+      <div class="container">
+        <div data-reveal>
+          <div
+            style="font-size:.8125rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:16px">
+            ✦ Limited Time Offer</div>
+          <h2 style="color:var(--white);font-size:clamp(2rem,5vw,3.5rem);margin-bottom:16px">Get 20% OFF Your <em
+              style="color:var(--gold)">First Order</em></h2>
+          <p style="color:rgba(255,255,255,.7);max-width:500px;margin:0 auto 32px;font-size:1.0625rem">Use code BARE20
+            at checkout. New customers only.</p>
+          <a href="/products.html" class="btn btn-gold btn-lg">Shop Now — Use BARE20</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Testimonials ─── -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header" data-reveal>
+          <div class="section-eyebrow">✦ What Our Customers Say</div>
+          <h2 class="section-title">Real Results, Real <span class="highlight">People</span></h2>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px">
+          <div
+            style="background:var(--white);border-radius:var(--radius-lg);padding:28px;border:1px solid var(--border-light)"
+            data-reveal>
+            <div style="color:var(--gold);margin-bottom:14px;font-size:1.25rem">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;
+            </div>
+            <p style="font-style:italic;line-height:1.7;margin-bottom:16px;color:var(--mid-gray)">"The Vitamin C serum
+              has completely transformed my skin! Dark spots are visibly lighter in just 3 weeks."</p>
+            <div style="font-weight:700">Priya S.</div>
+            <div style="font-size:.8125rem;color:var(--gold)">Vitamin C Brightening Serum</div>
+          </div>
+          <div
+            style="background:var(--white);border-radius:var(--radius-lg);padding:28px;border:1px solid var(--border-light)"
+            data-reveal>
+            <div style="color:var(--gold);margin-bottom:14px;font-size:1.25rem">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;
+            </div>
+            <p style="font-style:italic;line-height:1.7;margin-bottom:16px;color:var(--mid-gray)">"I've tried so many
+              face washes, but the Salicylic Acid one is the only one that actually controls my oily skin without drying
+              it out."</p>
+            <div style="font-weight:700">Ananya R.</div>
+            <div style="font-size:.8125rem;color:var(--gold)">Salicylic Acid Face Wash</div>
+          </div>
+          <div
+            style="background:var(--white);border-radius:var(--radius-lg);padding:28px;border:1px solid var(--border-light)"
+            data-reveal>
+            <div style="color:var(--gold);margin-bottom:14px;font-size:1.25rem">&#x2605;&#x2605;&#x2605;&#x2605;&#x2606;
+            </div>
+            <p style="font-style:italic;line-height:1.7;margin-bottom:16px;color:var(--mid-gray)">"The Hyaluronic Acid
+              serum gave me that glass skin look I've always wanted. Obsessed!"</p>
+            <div style="font-weight:700">Meera K.</div>
+            <div style="font-size:.8125rem;color:var(--gold)">Hyaluronic Acid Deep Hydration Serum</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ─── Bulk Order CTA ─── -->
+    <section style="background:var(--cream-dark);padding:60px 0;border-top:1px solid var(--border-light)">
+      <div class="container"
+        style="display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap">
+        <div data-reveal>
+          <div class="section-eyebrow" style="text-align:left">✦ For Businesses</div>
+          <h2 style="font-size:clamp(1.5rem,4vw,2.5rem);margin-bottom:12px">Order in Bulk,<br><em class="highlight">Save
+              More</em></h2>
+          <p>Special pricing for retail stores, spas, and beauty professionals.</p>
+        </div>
+        <div>
+          <a href="/bulk-order.html" class="btn btn-primary btn-lg">Get Bulk Quote</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ─── Footer ─── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo">Bare<span>Sober</span></div>
+          <p class="footer-tagline">A brand by <strong>Happi Gums</strong> — premium skincare formulated with science
+            and nature for your best skin, authentically.</p>
+          <div style="margin-top:16px;font-size:.8125rem;color:rgba(255,255,255,.45);line-height:1.6">
+            <strong style="color:rgba(255,255,255,.6)">Registered Office:</strong><br>
+            26, Ganga Vihar, Opposite Sector-2,<br>
+            Kudi Bhagatasni Housing Board Colony,<br>
+            Jodhpur, Rajasthan — 342005<br>
+            GSTIN: 08AAQFH6736A1ZA
+          </div>
+        </div>
+        <div>
+          <div class="footer-heading">Shop</div>
+          <ul class="footer-links">
+            <li><a href="/products.html">All Products</a></li>
+            <li><a href="/products.html?category=serum">Serums</a></li>
+            <li><a href="/products.html?category=face-wash">Face Wash</a></li>
+            <li><a href="/products.html?bestSeller=true">Best Sellers</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-heading">Account</div>
+          <ul class="footer-links">
+            <li><a href="/auth.html">Login / Sign Up</a></li>
+            <li><a href="/profile.html?tab=orders">My Orders</a></li>
+            <li><a href="/profile.html?tab=wishlist">Wishlist</a></li>
+            <li><a href="/bulk-order.html">Bulk Order</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-heading">Contact</div>
+          <ul class="footer-links">
+            <li><a href="mailto:happigums@outlook.com">happigums@outlook.com</a></li>
+            <li><a href="https://www.amazon.in/dp/B0D31952CB" target="_blank">Shop on Amazon</a></li>
+            <li>Jodhpur, Rajasthan 342005</li>
+            <li>Mon–Sat: 10AM – 7PM IST</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2024 BareSober by Happi Gums. All rights reserved.</span>
+        <span style="color:rgba(255,255,255,.4)">GSTIN: 08AAQFH6736A1ZA</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cart Drawer -->
+  <div class="cart-drawer" id="cart-drawer">
+    <div class="drawer-header">
+      <h3 style="font-family:var(--font-serif);font-size:1.25rem">Shopping Cart</h3>
+      <button class="modal-close" id="cart-close-btn">✕</button>
+    </div>
+    <div class="drawer-body" id="cart-drawer-body">
+      <div class="loading-overlay">
+        <div class="spinner"></div>
+      </div>
+    </div>
+    <div class="drawer-footer" id="cart-drawer-footer" style="display:none"></div>
+  </div>
+  <div class="cart-overlay" id="cart-overlay"></div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/cart.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Load featured products
+      try {
+        const { products } = await API.Products.getFeatured();
+        const grid = document.getElementById('featured-products-grid');
+        if (grid) grid.innerHTML = products.length
+          ? products.map(p => Utils.renderProductCard(p)).join('')
+          : '<p style="grid-column:1/-1;text-align:center;color:var(--light-gray)">No featured products yet.</p>';
+      } catch (e) {
+        const grid = document.getElementById('featured-products-grid');
+        if (grid) grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--error)">Failed to load products.</p>';
+      }
+
+      // Load best sellers
+      try {
+        const { products } = await API.Products.getBestSellers();
+        const grid = document.getElementById('bestseller-grid');
+        if (grid) grid.innerHTML = products.length
+          ? products.map(p => Utils.renderProductCard(p)).join('')
+          : '<p style="grid-column:1/-1;text-align:center;color:var(--light-gray)">No bestsellers yet.</p>';
+      } catch { }
+    });
+  </script>
+</body>
+
+</html>

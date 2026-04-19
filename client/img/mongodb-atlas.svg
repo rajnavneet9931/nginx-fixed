@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" rx="24" fill="#0B1F1A"/>
+  <circle cx="170" cy="180" r="70" fill="#13AA52" opacity="0.15"/>
+  <circle cx="1020" cy="470" r="90" fill="#13AA52" opacity="0.12"/>
+  <path d="M215 395C186 353 172 311 172 269C172 188 224 122 300 122C376 122 428 188 428 269C428 311 414 353 385 395L300 520L215 395Z" fill="#13AA52"/>
+  <path d="M300 160C320 205 330 250 330 295C330 351 317 408 300 470C283 408 270 351 270 295C270 250 280 205 300 160Z" fill="#E7FFF1"/>
+  <text x="500" y="255" fill="#EAFBF1" font-family="Arial, Helvetica, sans-serif" font-size="68" font-weight="700">MongoDB Atlas</text>
+  <text x="500" y="330" fill="#A9D7BC" font-family="Arial, Helvetica, sans-serif" font-size="32">Cloud database configuration ready for BareSober</text>
+  <text x="500" y="390" fill="#D5F5E3" font-family="Arial, Helvetica, sans-serif" font-size="26">Set your Atlas connection string in .env and run with Docker or Node.js</text>
+</svg>

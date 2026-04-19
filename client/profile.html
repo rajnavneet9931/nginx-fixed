@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Account | BareSober</title>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <nav class="nav">
+        <a href="/" class="logo">Bare<span>Sober</span></a>
+        <ul class="nav-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/products.html">Shop</a></li>
+        </ul>
+        <div class="nav-actions">
+          <button class="nav-icon" id="cart-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <path d="M16 10a4 4 0 0 1-8 0" />
+            </svg><span class="badge cart-count" style="display:none">0</span></button>
+          <button class="btn btn-outline btn-sm" id="logout-btn">Logout</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main style="padding-top:100px">
+    <div class="container section">
+      <div class="profile-layout">
+        <!-- Sidebar -->
+        <aside class="profile-sidebar">
+          <div class="profile-avatar"><span class="profile-avatar-initials"></span></div>
+          <div class="profile-name profile-user-name">Loading...</div>
+          <div class="profile-email profile-user-email"></div>
+          <nav class="profile-nav">
+            <div class="profile-nav-item" data-tab="profile">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+              My Profile
+            </div>
+            <div class="profile-nav-item" data-tab="orders">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <rect x="1" y="3" width="15" height="13" />
+                <path d="m16 8 4 4-4 4" />
+              </svg>
+              My Orders
+            </div>
+            <div class="profile-nav-item" data-tab="wishlist">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z" />
+              </svg>
+              Wishlist
+            </div>
+            <div class="profile-nav-item" data-tab="bulk">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <rect x="2" y="3" width="20" height="14" rx="2" />
+                <path d="M8 21h8m-4-4v4" />
+              </svg>
+              Bulk Orders
+            </div>
+            <div class="profile-nav-item" data-tab="security">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <rect x="3" y="11" width="18" height="11" rx="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+              </svg>
+              Security
+            </div>
+          </nav>
+        </aside>
+
+        <!-- Content -->
+        <div>
+          <!-- Profile Tab -->
+          <div class="profile-tab-content" id="tab-profile" style="display:none">
+            <div
+              style="background:var(--white);border-radius:var(--radius-lg);padding:28px;border:1px solid var(--border-light)">
+              <h3 style="font-family:var(--font-serif);font-size:1.5rem;margin-bottom:24px">Personal Information</h3>
+              <form id="profile-form">
+                <div class="grid-2" style="margin-bottom:16px">
+                  <div class="form-group"><label class="form-label">Full Name</label><input name="name"
+                      class="form-input" placeholder="Your name"></div>
+                  <div class="form-group"><label class="form-label">Email</label><input name="email" type="email"
+                      class="form-input" placeholder="your@email.com"></div>
+                </div>
+                <div class="form-group" style="margin-bottom:20px"><label class="form-label">Mobile</label><input
+                    name="mobile" class="form-input" placeholder="10-digit mobile" readonly
+                    style="background:var(--cream-dark)"></div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Orders Tab -->
+          <div class="profile-tab-content" id="tab-orders" style="display:none">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+              <h3 style="font-family:var(--font-serif);font-size:1.5rem">My Orders</h3>
+            </div>
+            <div id="orders-container">
+              <div class="loading-overlay">
+                <div class="spinner"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Wishlist Tab -->
+          <div class="profile-tab-content" id="tab-wishlist" style="display:none">
+            <h3 style="font-family:var(--font-serif);font-size:1.5rem;margin-bottom:20px">My Wishlist</h3>
+            <div id="wishlist-container">
+              <div class="loading-overlay">
+                <div class="spinner"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bulk Orders Tab -->
+          <div class="profile-tab-content" id="tab-bulk" style="display:none">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+              <h3 style="font-family:var(--font-serif);font-size:1.5rem">Bulk Inquiries</h3>
+              <a href="/bulk-order.html" class="btn btn-outline btn-sm">New Inquiry</a>
+            </div>
+            <div id="bulk-orders-container"></div>
+          </div>
+
+          <!-- Security Tab -->
+          <div class="profile-tab-content" id="tab-security" style="display:none">
+            <div
+              style="background:var(--white);border-radius:var(--radius-lg);padding:28px;border:1px solid var(--border-light)">
+              <h3 style="font-family:var(--font-serif);font-size:1.5rem;margin-bottom:24px">Change Password</h3>
+              <form id="change-password-form">
+                <div class="form-group" style="margin-bottom:16px"><label class="form-label">Current
+                    Password</label><input name="currentPassword" type="password" class="form-input" required></div>
+                <div class="form-group" style="margin-bottom:16px"><label class="form-label">New Password</label><input
+                    name="newPassword" type="password" class="form-input" required></div>
+                <div class="form-group" style="margin-bottom:20px"><label class="form-label">Confirm New
+                    Password</label><input name="confirmPassword" type="password" class="form-input" required></div>
+                <button type="submit" class="btn btn-primary">Update Password</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="cart-drawer" id="cart-drawer">
+    <div class="drawer-header">
+      <h3 style="font-family:var(--font-serif);font-size:1.25rem">Shopping Cart</h3><button class="modal-close"
+        id="cart-close-btn">✕</button>
+    </div>
+    <div class="drawer-body" id="cart-drawer-body"></div>
+    <div class="drawer-footer" id="cart-drawer-footer" style="display:none"></div>
+  </div>
+  <div class="cart-overlay" id="cart-overlay"></div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/cart.js"></script>
+  <script src="/js/profile.js"></script>
+</body>
+
+</html>

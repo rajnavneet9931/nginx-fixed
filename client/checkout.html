@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | BareSober</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    /* ─── UPI Payment Modal ─── */
+    .upi-overlay {
+      position: fixed; inset: 0; z-index: 10000;
+      background: rgba(0,0,0,.65); backdrop-filter: blur(6px);
+      display: none; align-items: center; justify-content: center;
+      animation: upiOverlayIn .3s ease;
+    }
+    .upi-overlay.active { display: flex; }
+    @keyframes upiOverlayIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .upi-modal {
+      background: var(--white);
+      border-radius: 24px;
+      width: min(460px, 94vw);
+      max-height: 92vh;
+      overflow-y: auto;
+      box-shadow: 0 32px 80px rgba(0,0,0,.25);
+      animation: upiSlideUp .4s cubic-bezier(.22,1,.36,1);
+      position: relative;
+    }
+    @keyframes upiSlideUp { from { opacity: 0; transform: translateY(40px) scale(.96); } to { opacity: 1; transform: none; } }
+
+    .upi-modal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 28px 0; border-bottom: none;
+    }
+    .upi-modal-header h3 {
+      font-family: var(--font-serif); font-size: 1.375rem; margin: 0;
+    }
+    .upi-modal-close {
+      background: var(--cream-dark); border: none; width: 36px; height: 36px;
+      border-radius: 50%; font-size: 1.125rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all .2s;
+    }
+    .upi-modal-close:hover { background: var(--charcoal); color: var(--white); }
+
+    .upi-modal-body { padding: 20px 28px 28px; }
+
+    /* App branding strip */
+    .upi-app-strip {
+      display: flex; align-items: center; gap: 14px;
+      background: linear-gradient(135deg, #f8f6f2, #f0ebe1);
+      border-radius: 14px; padding: 16px 20px; margin-bottom: 20px;
+    }
+    .upi-app-logo {
+      width: 52px; height: 52px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.625rem; font-weight: 800; color: var(--white);
+      flex-shrink: 0;
+    }
+    .upi-app-logo.gpay { background: linear-gradient(135deg, #4285F4, #34A853, #FBBC05, #EA4335); }
+    .upi-app-logo.phonepe { background: linear-gradient(135deg, #5f259f, #7b3fbf); }
+    .upi-app-info { flex: 1; }
+    .upi-app-name { font-weight: 700; font-size: 1.0625rem; }
+    .upi-app-desc { font-size: .8125rem; color: var(--mid-gray); margin-top: 2px; }
+
+    /* Payment details */
+    .upi-details {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+      margin-bottom: 20px;
+    }
+    .upi-detail-card {
+      background: var(--cream); border-radius: 12px; padding: 14px 16px;
+    }
+    .upi-detail-label {
+      font-size: .6875rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--light-gray); margin-bottom: 4px;
+    }
+    .upi-detail-value { font-weight: 700; font-size: 1rem; }
+    .upi-detail-value.amount { color: var(--forest); font-size: 1.25rem; }
+
+    /* QR section */
+    .upi-qr-section {
+      text-align: center; margin-bottom: 20px;
+    }
+    .upi-qr-label {
+      font-size: .75rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .1em; color: var(--light-gray); margin-bottom: 12px;
+    }
+    .upi-qr-frame {
+      display: inline-block; padding: 16px; background: var(--white);
+      border: 2px solid var(--border-light); border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,.06);
+      position: relative;
+    }
+    .upi-qr-img {
+      width: 200px; height: 200px; display: block;
+      border-radius: 8px;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: pixelated;
+    }
+    .upi-qr-badge {
+      position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
+      background: var(--charcoal); color: var(--white); font-size: .6875rem;
+      font-weight: 700; padding: 4px 14px; border-radius: 20px;
+      letter-spacing: .05em; white-space: nowrap;
+    }
+
+    /* Timer */
+    .upi-timer-section {
+      text-align: center; margin-bottom: 24px;
+    }
+    .upi-timer-ring {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 64px; height: 64px; border-radius: 50%;
+      background: conic-gradient(var(--gold) var(--progress, 100%), var(--cream) 0%);
+      position: relative;
+    }
+    .upi-timer-ring::before {
+      content: ''; position: absolute; inset: 5px;
+      background: var(--white); border-radius: 50%;
+    }
+    .upi-timer-text {
+      position: relative; z-index: 1; font-weight: 800;
+      font-size: 1rem; font-variant-numeric: tabular-nums;
+    }
+    .upi-timer-text.warning { color: var(--error); }
+    .upi-timer-label {
+      font-size: .8125rem; color: var(--mid-gray); margin-top: 6px;
+    }
+
+    /* Action buttons */
+    .upi-actions {
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .upi-btn-confirm {
+      background: linear-gradient(135deg, var(--charcoal), #3d2b1a);
+      color: var(--white); border: none; border-radius: 14px;
+      padding: 16px; font-size: 1rem; font-weight: 700;
+      cursor: pointer; transition: all .3s; letter-spacing: .02em;
+    }
+    .upi-btn-confirm:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,0,0,.18); }
+    .upi-btn-confirm:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; }
+
+    .upi-btn-cancel {
+      background: none; border: 1.5px solid var(--border);
+      border-radius: 14px; padding: 13px; font-size: .9375rem;
+      font-weight: 600; cursor: pointer; color: var(--mid-gray);
+      transition: all .2s;
+    }
+    .upi-btn-cancel:hover { border-color: var(--error); color: var(--error); }
+
+    .upi-security-note {
+      text-align: center; font-size: .75rem; color: var(--light-gray);
+      margin-top: 16px; line-height: 1.5;
+    }
+
+    /* Success state */
+    .upi-success-state {
+      text-align: center; padding: 20px 0;
+    }
+    .upi-success-icon {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 2.5rem; color: white; margin-bottom: 16px;
+      animation: upiCheckBounce .5s cubic-bezier(.34,1.56,.64,1);
+    }
+    @keyframes upiCheckBounce { from { transform: scale(0); } to { transform: scale(1); } }
+    .upi-success-title {
+      font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: 8px;
+    }
+    .upi-success-sub { color: var(--mid-gray); font-size: .9375rem; }
+    .upi-success-utr {
+      display: inline-block; background: var(--cream); border-radius: 8px;
+      padding: 8px 20px; font-weight: 700; font-size: .875rem;
+      letter-spacing: .05em; margin-top: 12px; font-family: monospace;
+    }
+
+    /* Expired state */
+    .upi-expired-state { text-align: center; padding: 20px 0; }
+    .upi-expired-icon {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 2.5rem; color: white; margin-bottom: 16px;
+    }
+
+    /* Responsive */
+    @media (max-width: 520px) {
+      .upi-modal { border-radius: 20px 20px 0 0; margin-top: auto; }
+      .upi-overlay.active { align-items: flex-end; }
+      .upi-qr-img { width: 160px; height: 160px; }
+      .upi-details { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<header class="header"><div class="container"><nav class="nav">
+  <a href="/" class="logo">Bare<span>Sober</span></a>
+  <div style="font-size:.875rem;color:var(--light-gray)">Secure Checkout 🔒</div>
+  <a href="/cart.html" class="btn btn-outline btn-sm">← Back to Cart</a>
+</nav></div></header>
+
+<main style="padding-top:100px">
+  <div class="container section">
+    <h1 style="font-family:var(--font-serif);margin-bottom:40px;font-size:2rem">Checkout</h1>
+    <div class="checkout-layout">
+      <div>
+        <!-- Address Section -->
+        <div class="checkout-section">
+          <div class="checkout-section-title">1. Delivery Address</div>
+          <div id="address-section"><div class="spinner"></div></div>
+        </div>
+
+        <!-- Payment Section -->
+        <div class="checkout-section">
+          <div class="checkout-section-title">2. Payment Method</div>
+          <div class="payment-options">
+            <div class="payment-option selected" data-method="cod">
+              <input type="radio" name="payment" checked><div class="payment-option-icon">💵</div>
+              <div class="payment-option-text"><div class="payment-option-title">Cash on Delivery</div><div class="payment-option-desc">Pay when your order arrives</div></div>
+            </div>
+            <div class="payment-option" data-method="googlepay">
+              <input type="radio" name="payment"><div class="payment-option-icon" style="background:linear-gradient(135deg,#4285F4,#34A853);color:#fff;font-weight:800;font-size:.875rem">G</div>
+              <div class="payment-option-text"><div class="payment-option-title">Google Pay</div><div class="payment-option-desc">Scan QR & pay via Google Pay</div></div>
+            </div>
+            <div class="payment-option" data-method="phonepe">
+              <input type="radio" name="payment"><div class="payment-option-icon" style="background:linear-gradient(135deg,#5f259f,#7b3fbf);color:#fff;font-weight:800;font-size:.875rem">Pe</div>
+              <div class="payment-option-text"><div class="payment-option-title">PhonePe</div><div class="payment-option-desc">Scan QR & pay via PhonePe</div></div>
+            </div>
+            <div class="payment-option" data-method="razorpay">
+              <input type="radio" name="payment"><div class="payment-option-icon">💳</div>
+              <div class="payment-option-text"><div class="payment-option-title">Credit / Debit Card</div><div class="payment-option-desc">Secure payment via Razorpay</div></div>
+            </div>
+          </div>
+        </div>
+
+        <button id="place-order-btn" class="btn btn-primary btn-lg w-full" style="margin-top:8px">Place Order →</button>
+        <p style="text-align:center;margin-top:12px;font-size:.8125rem;color:var(--light-gray)">🔒 Your payment is 100% secure and encrypted</p>
+      </div>
+
+      <!-- Order Summary -->
+      <div id="checkout-order-summary" class="order-box"><div class="spinner"></div></div>
+    </div>
+  </div>
+</main>
+
+<!-- ─── UPI Payment Modal ─── -->
+<div class="upi-overlay" id="upi-overlay">
+  <div class="upi-modal" id="upi-modal">
+    <div class="upi-modal-header">
+      <h3 id="upi-modal-title">Complete Payment</h3>
+      <button class="upi-modal-close" id="upi-close-btn">✕</button>
+    </div>
+    <div class="upi-modal-body" id="upi-modal-body">
+      <!-- Dynamic content injected by JS -->
+    </div>
+  </div>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/checkout.js"></script>
+</body>
+</html>

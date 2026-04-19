@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Detail | BareSober</title>
+  <meta name="description" content="Shop premium skincare at BareSober.">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+<header class="header"><div class="container"><nav class="nav">
+  <a href="/" class="logo">Bare<span>Sober</span></a>
+  <ul class="nav-links"><li><a href="/">Home</a></li><li><a href="/products.html">Shop</a></li></ul>
+  <div class="nav-actions">
+    <button class="nav-icon" id="cart-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="badge cart-count" style="display:none">0</span></button>
+    <a href="/auth.html" class="nav-icon" id="nav-auth-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></a>
+    <a href="/profile.html" class="nav-icon" id="nav-profile-link" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></a>
+  </div>
+</nav></div></header>
+
+<main style="padding-top:80px">
+  <div class="container section">
+    <div class="breadcrumb" style="margin-bottom:32px">
+      <a href="/">Home</a><span class="breadcrumb-sep">›</span>
+      <a href="/products.html">Shop</a><span class="breadcrumb-sep">›</span>
+      <span>Product</span>
+    </div>
+    <div id="detail-loading" class="loading-overlay"><div class="spinner"></div></div>
+    <div id="product-detail-container"></div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom" style="border-top:none;padding-top:0">
+      <span>© 2024 BareSober</span><a href="/products.html" style="color:var(--gold)">Continue Shopping</a>
+    </div>
+  </div>
+</footer>
+
+<div class="cart-drawer" id="cart-drawer">
+  <div class="drawer-header"><h3 style="font-family:var(--font-serif);font-size:1.25rem">Shopping Cart</h3><button class="modal-close" id="cart-close-btn">✕</button></div>
+  <div class="drawer-body" id="cart-drawer-body"></div>
+  <div class="drawer-footer" id="cart-drawer-footer" style="display:none"></div>
+</div>
+<div class="cart-overlay" id="cart-overlay"></div>
+
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/cart.js"></script>
+<script src="/js/product-detail.js"></script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Products | BareSober Admin</title>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<div class="admin-wrapper">
+  <aside class="admin-sidebar">
+    <div class="sidebar-brand"><div class="sidebar-logo">Bare<span>Sober</span></div><div class="sidebar-subtitle">Admin Panel</div></div>
+    <nav class="sidebar-nav">
+      <a href="/admin/" class="sidebar-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</a>
+      <a href="/admin/products.html" class="sidebar-link active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>Products</a>
+      <a href="/admin/orders.html" class="sidebar-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/></svg>Orders</a>
+      <a href="/admin/users.html" class="sidebar-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Users</a>
+    </nav>
+    <div class="sidebar-footer"><button class="sidebar-link" id="admin-logout-btn" style="width:100%;text-align:left">Logout</button></div>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <div class="topbar-title">Products</div>
+      <div class="topbar-actions">
+        <button class="topbar-btn topbar-btn-primary" id="add-product-btn">+ Add Product</button>
+      </div>
+    </div>
+
+    <div class="admin-page">
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <div class="admin-card-title">All Products</div>
+          <div class="admin-filters">
+            <div class="admin-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input id="product-search" type="text" placeholder="Search products..."></div>
+            <select class="admin-select" id="category-filter">
+              <option value="">All Categories</option>
+              <option value="serum">Serum</option>
+              <option value="face-wash">Face Wash</option>
+              <option value="moisturizer">Moisturizer</option>
+              <option value="toner">Toner</option>
+              <option value="sunscreen">Sunscreen</option>
+              <option value="mask">Mask</option>
+            </select>
+          </div>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Rating</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="products-tbody"><tr><td colspan="7" style="text-align:center;padding:40px"><div class="spinner"></div></td></tr></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="products-pagination"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Add/Edit Product Modal -->
+<div id="product-modal-overlay" class="admin-modal-overlay" style="display:none">
+  <div class="admin-modal">
+    <div class="admin-modal-header">
+      <div class="admin-modal-title" id="modal-title">Add Product</div>
+      <button class="admin-modal-close" id="modal-close-btn">✕</button>
+    </div>
+    <div class="admin-modal-body">
+      <form id="product-form">
+        <input type="hidden" id="product-id">
+        <div class="admin-form-grid admin-form-2col">
+          <div class="admin-form-group"><label class="admin-form-label">Product Name *</label><input id="p-name" class="admin-form-input" required></div>
+          <div class="admin-form-group"><label class="admin-form-label">Category *</label>
+            <select id="p-category" class="admin-form-input admin-form-select">
+              <option value="serum">Serum</option><option value="face-wash">Face Wash</option><option value="moisturizer">Moisturizer</option>
+              <option value="toner">Toner</option><option value="sunscreen">Sunscreen</option><option value="mask">Mask</option>
+              <option value="eye-care">Eye Care</option><option value="body-care">Body Care</option><option value="other">Other</option>
+            </select>
+          </div>
+          <div class="admin-form-group"><label class="admin-form-label">Price (₹) *</label><input id="p-price" type="number" class="admin-form-input" required></div>
+          <div class="admin-form-group"><label class="admin-form-label">Discount Price (₹)</label><input id="p-discount-price" type="number" class="admin-form-input"></div>
+          <div class="admin-form-group"><label class="admin-form-label">Stock Qty *</label><input id="p-stock" type="number" class="admin-form-input" required></div>
+          <div class="admin-form-group"><label class="admin-form-label">Volume/Weight</label><input id="p-volume" class="admin-form-input" placeholder="e.g. 30ml"></div>
+        </div>
+        <div class="admin-form-group" style="margin-top:16px"><label class="admin-form-label">Short Description</label><input id="p-short-desc" class="admin-form-input" placeholder="Brief tagline"></div>
+        <div class="admin-form-group" style="margin-top:12px"><label class="admin-form-label">Full Description *</label><textarea id="p-desc" class="admin-form-input admin-form-textarea" required></textarea></div>
+        <div class="admin-form-group" style="margin-top:12px"><label class="admin-form-label">Ingredients</label><textarea id="p-ingredients" class="admin-form-input" rows="3"></textarea></div>
+        <div class="admin-form-group" style="margin-top:12px"><label class="admin-form-label">Benefits (comma separated)</label><input id="p-benefits" class="admin-form-input" placeholder="Brightens skin, Reduces dark spots"></div>
+        <div class="admin-form-group" style="margin-top:12px"><label class="admin-form-label">How to Use</label><textarea id="p-howto" class="admin-form-input" rows="3"></textarea></div>
+        <div class="admin-form-group" style="margin-top:12px"><label class="admin-form-label">Skin Types (comma separated)</label><input id="p-skintype" class="admin-form-input" placeholder="oily, combination, normal"></div>
+        <div class="admin-form-group" style="margin-top:12px"><label class="admin-form-label">Tags (comma separated)</label><input id="p-tags" class="admin-form-input" placeholder="vitamin c, brightening, serum"></div>
+        <div style="display:flex;gap:24px;margin-top:16px">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" id="p-featured"> Featured</label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" id="p-bestseller"> Best Seller</label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" id="p-active" checked> Active</label>
+        </div>
+        <div class="admin-form-group" style="margin-top:16px">
+          <label class="admin-form-label">Product Images</label>
+          <div class="image-upload-zone" id="upload-zone">
+            <div style="font-size:2rem;margin-bottom:8px">📷</div>
+            <div style="font-weight:600;margin-bottom:4px">Upload Images</div>
+            <div style="font-size:.8125rem;color:var(--admin-muted)">Click or drag & drop (max 5 images, 5MB each)</div>
+            <input type="file" id="p-images" multiple accept="image/*" style="display:none">
+          </div>
+          <div class="image-previews" id="image-previews"></div>
+        </div>
+      </form>
+    </div>
+    <div class="admin-modal-footer">
+      <button class="topbar-btn topbar-btn-outline" id="modal-cancel-btn">Cancel</button>
+      <button class="topbar-btn topbar-btn-primary" id="product-save-btn">Save Product</button>
+    </div>
+  </div>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/admin/products.js"></script>
+</body>
+</html>

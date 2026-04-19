@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop Skincare Products | BareSober</title>
+  <meta name="description" content="Shop BareSober's full collection of serums, face washes, moisturizers, sunscreens and more. Filter by category, skin type, and price.">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+<!-- Header -->
+<header class="header"><div class="container"><nav class="nav">
+  <a href="/" class="logo">Bare<span>Sober</span></a>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/products.html" class="active">Shop</a></li>
+    <li><a href="/bulk-order.html">Bulk Order</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="nav-icon" id="cart-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="badge cart-count" style="display:none">0</span></button>
+    <a href="/auth.html" class="nav-icon" id="nav-auth-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></a>
+    <a href="/profile.html" class="nav-icon" id="nav-profile-link" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></a>
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </div>
+</nav></div></header>
+<div class="mobile-menu" id="mobile-menu"><div class="mobile-close" id="mobile-close">✕</div><a href="/">Home</a><a href="/products.html">Shop</a><a href="/auth.html">Login</a></div>
+
+<!-- Page Header -->
+<div class="page-header">
+  <div class="breadcrumb"><a href="/">Home</a><span class="breadcrumb-sep">›</span><span>Shop</span></div>
+  <h1>Our Collection</h1>
+  <p>Premium skincare formulated for every skin type and concern.</p>
+</div>
+
+<!-- Search bar -->
+<div style="background:var(--cream-dark);padding:20px 0;border-bottom:1px solid var(--border-light)">
+  <div class="container" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+    <div style="position:relative;flex:1;min-width:240px">
+      <svg style="position:absolute;left:14px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--light-gray)" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input id="search-input" class="form-input" style="padding-left:42px" placeholder="Search products...">
+    </div>
+    <select id="sort-select" class="form-input form-select" style="width:auto;min-width:180px">
+      <option value="createdAt-desc">Newest First</option>
+      <option value="price-asc">Price: Low to High</option>
+      <option value="price-desc">Price: High to Low</option>
+      <option value="rating-desc">Top Rated</option>
+      <option value="popular-desc">Most Popular</option>
+    </select>
+    <span id="product-count" style="font-size:.875rem;color:var(--light-gray);white-space:nowrap"></span>
+  </div>
+</div>
+
+<!-- Main layout -->
+<main class="section">
+  <div class="container">
+    <div class="shop-layout">
+      <!-- Filters Sidebar -->
+      <aside class="filters-sidebar">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+          <div style="font-weight:700;font-size:.9375rem">Filters</div>
+          <button id="clear-filters" style="font-size:.8125rem;color:var(--gold);background:none;border:none;cursor:pointer">Clear All</button>
+        </div>
+
+        <div class="filter-section">
+          <div class="filter-title">Category</div>
+          <div class="filter-options">
+            <div class="pill gold" data-filter-category="" style="margin-bottom:4px">All Products</div>
+            <div class="pill" data-filter-category="serum">Serums</div>
+            <div class="pill" data-filter-category="face-wash">Face Wash</div>
+            <div class="pill" data-filter-category="moisturizer">Moisturizer</div>
+            <div class="pill" data-filter-category="toner">Toner</div>
+            <div class="pill" data-filter-category="sunscreen">Sunscreen</div>
+            <div class="pill" data-filter-category="mask">Face Mask</div>
+            <div class="pill" data-filter-category="eye-care">Eye Care</div>
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <div class="filter-title">Skin Type</div>
+          <div class="filter-options">
+            <label class="filter-option"><input type="checkbox" data-skin-type value="oily"> Oily</label>
+            <label class="filter-option"><input type="checkbox" data-skin-type value="dry"> Dry</label>
+            <label class="filter-option"><input type="checkbox" data-skin-type value="combination"> Combination</label>
+            <label class="filter-option"><input type="checkbox" data-skin-type value="sensitive"> Sensitive</label>
+            <label class="filter-option"><input type="checkbox" data-skin-type value="normal"> Normal</label>
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <div class="filter-title">Price Range</div>
+          <div class="price-range">
+            <input class="form-input" id="min-price" type="number" placeholder="Min" style="padding:10px 12px">
+            <input class="form-input" id="max-price" type="number" placeholder="Max" style="padding:10px 12px">
+          </div>
+          <button id="apply-price" class="btn btn-outline btn-sm" style="margin-top:10px;width:100%">Apply</button>
+        </div>
+
+        <div class="filter-section">
+          <div class="filter-title">Availability</div>
+          <label class="filter-option"><input type="checkbox" id="in-stock-filter"> In Stock Only</label>
+        </div>
+      </aside>
+
+      <!-- Products -->
+      <div>
+        <div id="products-loading" class="loading-overlay" style="display:none"><div class="spinner"></div></div>
+        <div class="products-grid" id="products-grid"></div>
+        <div id="pagination" style="display:flex;justify-content:center;gap:8px;margin-top:32px;flex-wrap:wrap"></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom" style="border-top:none;padding-top:0">
+      <span>© 2024 BareSober</span>
+      <a href="/" style="color:var(--gold)">Back to Home</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Cart Drawer -->
+<div class="cart-drawer" id="cart-drawer">
+  <div class="drawer-header"><h3 style="font-family:var(--font-serif);font-size:1.25rem">Shopping Cart</h3><button class="modal-close" id="cart-close-btn">✕</button></div>
+  <div class="drawer-body" id="cart-drawer-body"></div>
+  <div class="drawer-footer" id="cart-drawer-footer" style="display:none"></div>
+</div>
+<div class="cart-overlay" id="cart-overlay"></div>
+
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/cart.js"></script>
+<script src="/js/products.js"></script>
+</body>
+</html>

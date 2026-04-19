@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Orders | BareSober Admin</title>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<div class="admin-wrapper">
+  <aside class="admin-sidebar">
+    <div class="sidebar-brand"><div class="sidebar-logo">Bare<span>Sober</span></div><div class="sidebar-subtitle">Admin Panel</div></div>
+    <nav class="sidebar-nav">
+      <a href="/admin/" class="sidebar-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</a>
+      <a href="/admin/products.html" class="sidebar-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>Products</a>
+      <a href="/admin/orders.html" class="sidebar-link active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/></svg>Orders</a>
+      <a href="/admin/users.html" class="sidebar-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Users</a>
+    </nav>
+    <div class="sidebar-footer"><button class="sidebar-link" id="admin-logout-btn" style="width:100%;text-align:left">Logout</button></div>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <div class="topbar-title">Orders</div>
+      <div class="admin-filters">
+        <select class="admin-select" id="order-type-filter" onchange="switchOrderType(this.value)">
+          <option value="regular">Regular Orders</option>
+          <option value="bulk">Bulk Orders</option>
+          <option value="notifications">Stock Notifications</option>
+        </select>
+        <select class="admin-select" id="order-status-filter"><option value="">All Statuses</option><option value="placed">Placed</option><option value="confirmed">Confirmed</option><option value="processing">Processing</option><option value="shipped">Shipped</option><option value="delivered">Delivered</option><option value="cancelled">Cancelled</option></select>
+      </div>
+    </div>
+
+    <div class="admin-page">
+      <!-- Regular Orders -->
+      <div id="regular-orders-section">
+        <div class="admin-card">
+          <div class="admin-card-header"><div class="admin-card-title">All Orders</div></div>
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead><tr><th>Order #</th><th>Customer</th><th>Items</th><th>Amount</th><th>Payment</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+              <tbody id="orders-tbody"><tr><td colspan="8" style="text-align:center;padding:40px"><div class="spinner"></div></td></tr></tbody>
+            </table>
+          </div>
+          <div class="pagination" id="orders-pagination"></div>
+        </div>
+      </div>
+
+      <!-- Bulk Orders -->
+      <div id="bulk-orders-section" style="display:none">
+        <div class="admin-card">
+          <div class="admin-card-header"><div class="admin-card-title">Bulk Inquiries</div></div>
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead><tr><th>Inquiry #</th><th>Contact</th><th>Company</th><th>Total Qty</th><th>Status</th><th>Quoted</th><th>Date</th><th>Actions</th></tr></thead>
+              <tbody id="bulk-tbody"><tr><td colspan="8" style="text-align:center;padding:40px"><div class="spinner"></div></td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notifications -->
+      <div id="notifications-section" style="display:none">
+        <div class="admin-card">
+          <div class="admin-card-header"><div class="admin-card-title">Stock Notifications</div></div>
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead><tr><th>Product</th><th>Email / Mobile</th><th>Notified</th><th>Date</th></tr></thead>
+              <tbody id="notifs-tbody"><tr><td colspan="4" style="text-align:center;padding:40px"><div class="spinner"></div></td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Update Status Modal -->
+<div id="status-modal" class="admin-modal-overlay" style="display:none">
+  <div class="admin-modal" style="max-width:420px">
+    <div class="admin-modal-header"><div class="admin-modal-title">Update Order Status</div><button class="admin-modal-close" onclick="document.getElementById('status-modal').style.display='none'">✕</button></div>
+    <div class="admin-modal-body">
+      <input type="hidden" id="status-order-id">
+      <div class="admin-form-group" style="margin-bottom:16px"><label class="admin-form-label">New Status</label>
+        <select id="new-status" class="admin-form-input admin-form-select">
+          <option value="placed">Placed</option><option value="confirmed">Confirmed</option><option value="processing">Processing</option>
+          <option value="shipped">Shipped</option><option value="delivered">Delivered</option><option value="cancelled">Cancelled</option>
+        </select>
+      </div>
+      <div class="admin-form-group" style="margin-bottom:16px"><label class="admin-form-label">Tracking Number</label><input id="tracking-number" class="admin-form-input" placeholder="Optional tracking number"></div>
+      <div class="admin-form-group"><label class="admin-form-label">Note</label><textarea id="status-note" class="admin-form-input" rows="3" placeholder="Status update note..."></textarea></div>
+    </div>
+    <div class="admin-modal-footer">
+      <button class="topbar-btn topbar-btn-outline" onclick="document.getElementById('status-modal').style.display='none'">Cancel</button>
+      <button class="topbar-btn topbar-btn-primary" id="save-status-btn">Update Status</button>
+    </div>
+  </div>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/admin/orders.js"></script>
+</body>
+</html>

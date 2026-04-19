@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Users | BareSober Admin</title>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<div class="admin-wrapper">
+  <aside class="admin-sidebar">
+    <div class="sidebar-brand"><div class="sidebar-logo">Bare<span>Sober</span></div><div class="sidebar-subtitle">Admin Panel</div></div>
+    <nav class="sidebar-nav">
+      <a href="/admin/" class="sidebar-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</a>
+      <a href="/admin/products.html" class="sidebar-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>Products</a>
+      <a href="/admin/orders.html" class="sidebar-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/></svg>Orders</a>
+      <a href="/admin/users.html" class="sidebar-link active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Users</a>
+    </nav>
+    <div class="sidebar-footer"><button class="sidebar-link" id="admin-logout-btn" style="width:100%;text-align:left">Logout</button></div>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <div class="topbar-title">Users</div>
+      <div class="admin-filters">
+        <div class="admin-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input id="user-search" type="text" placeholder="Search users..."></div>
+        <select class="admin-select" id="role-filter"><option value="">All Roles</option><option value="user">Users</option><option value="admin">Admins</option></select>
+      </div>
+    </div>
+    <div class="admin-page">
+      <div class="admin-card">
+        <div class="admin-card-header"><div class="admin-card-title">All Users</div><div id="user-count" class="text-muted" style="font-size:.875rem"></div></div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead><tr><th>Name</th><th>Email</th><th>Mobile</th><th>Role</th><th>Status</th><th>Joined</th><th>Actions</th></tr></thead>
+            <tbody id="users-tbody"><tr><td colspan="7" style="text-align:center;padding:40px"><div class="spinner"></div></td></tr></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="users-pagination"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  if (!BSAuth.isAdmin()) { window.location.href = '/auth.html'; return; }
+  document.getElementById('admin-logout-btn').addEventListener('click', () => BSAuth.logout());
+
+  let page = 1, searchVal = '', roleVal = '';
+  const load = async () => {
+    const params = new URLSearchParams({ page, limit: 20 });
+    if (searchVal) params.set('search', searchVal);
+    if (roleVal) params.set('role', roleVal);
+    try {
+      const { users, total } = await API.Admin.getUsers(params.toString());
+      document.getElementById('user-count').textContent = `${total} users`;
+      document.getElementById('users-tbody').innerHTML = users.map(u => `
+        <tr>
+          <td style="font-weight:600">${u.name}</td>
+          <td>${u.email||'—'}</td>
+          <td>${u.mobile||'—'}</td>
+          <td><span class="table-badge ${u.role==='admin'?'badge-gold':'badge-gray'}">${u.role}</span></td>
+          <td><span class="table-badge ${u.isActive?'badge-success':'badge-error'}">${u.isActive?'Active':'Inactive'}</span></td>
+          <td style="color:var(--admin-muted)">${new Date(u.createdAt).toLocaleDateString('en-IN')}</td>
+          <td>
+            ${u.role !== 'admin' ? `<button class="action-btn action-btn-${u.isActive?'delete':'edit'} toggle-user-btn" data-id="${u._id}" data-active="${u.isActive}">${u.isActive?'Deactivate':'Activate'}</button>` : '<span style="color:var(--admin-muted);font-size:.8125rem">Protected</span>'}
+          </td>
+        </tr>`).join('') || '<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--admin-muted)">No users found</td></tr>';
+
+      document.querySelectorAll('.toggle-user-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          if (!confirm(`${btn.dataset.active === 'true' ? 'Deactivate' : 'Activate'} this user?`)) return;
+          try { await API.Admin.toggleUser(btn.dataset.id); load(); Toast.success('User status updated'); } catch (err) { Toast.error(err.message); }
+        });
+      });
+    } catch (err) { Toast.error('Failed to load users'); }
+  };
+
+  const debounce = (fn, ms) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
+  document.getElementById('user-search').addEventListener('input', debounce((e) => { searchVal = e.target.value; page = 1; load(); }, 500));
+  document.getElementById('role-filter').addEventListener('change', (e) => { roleVal = e.target.value; page = 1; load(); });
+  load();
+});
+</script>
+</body>
+</html>

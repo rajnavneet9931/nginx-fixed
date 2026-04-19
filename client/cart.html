@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart | BareSober</title>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+<header class="header"><div class="container"><nav class="nav">
+  <a href="/" class="logo">Bare<span>Sober</span></a>
+  <ul class="nav-links"><li><a href="/">Home</a></li><li><a href="/products.html">Shop</a></li></ul>
+  <div class="nav-actions">
+    <a href="/auth.html" class="nav-icon" id="nav-auth-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></a>
+    <a href="/profile.html" class="nav-icon" id="nav-profile-link" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></a>
+  </div>
+</nav></div></header>
+
+<div class="page-header"><div class="breadcrumb"><a href="/">Home</a><span class="breadcrumb-sep">›</span><span>Cart</span></div><h1>Shopping Cart</h1></div>
+
+<main class="section">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 380px;gap:32px;align-items:start">
+      <div id="cart-page-container"><div class="loading-overlay"><div class="spinner"></div></div></div>
+      <div id="cart-summary"></div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer"><div class="container"><div class="footer-bottom" style="border-top:none;padding-top:0"><span>© 2024 BareSober</span><a href="/products.html" style="color:var(--gold)">Continue Shopping</a></div></div></footer>
+
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/cart.js"></script>
+</body>
+</html>

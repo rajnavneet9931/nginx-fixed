@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login / Sign Up | BareSober</title>
+  <meta name="description" content="Login or create your BareSober account to manage orders and wishlist.">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+<div class="auth-page">
+  <!-- Left Brand Panel -->
+  <div class="auth-left">
+    <div>
+      <a href="/" class="logo" style="color:var(--white)">Bare<span style="color:var(--gold)">Sober</span></a>
+      <p style="color:rgba(255,255,255,.6);margin-top:8px;font-size:.9375rem">Premium Skincare</p>
+    </div>
+    <div>
+      <h2 style="color:var(--white);font-size:clamp(2rem,4vw,3rem);margin-bottom:16px">Your Skin Deserves<br><em style="color:var(--gold)">The Best</em></h2>
+      <p style="color:rgba(255,255,255,.6);font-size:1.0625rem;max-width:380px;line-height:1.7">Join thousands of happy customers who've transformed their skincare routine with BareSober.</p>
+      <div style="display:flex;flex-direction:column;gap:16px;margin-top:40px">
+        <div style="display:flex;align-items:center;gap:12px;color:rgba(255,255,255,.7)"><span style="color:var(--gold);font-size:1.25rem">✓</span>Exclusive member discounts</div>
+        <div style="display:flex;align-items:center;gap:12px;color:rgba(255,255,255,.7)"><span style="color:var(--gold);font-size:1.25rem">✓</span>Order tracking & history</div>
+        <div style="display:flex;align-items:center;gap:12px;color:rgba(255,255,255,.7)"><span style="color:var(--gold);font-size:1.25rem">✓</span>Save wishlist & addresses</div>
+        <div style="display:flex;align-items:center;gap:12px;color:rgba(255,255,255,.7)"><span style="color:var(--gold);font-size:1.25rem">✓</span>Back-in-stock notifications</div>
+      </div>
+    </div>
+    <p style="color:rgba(255,255,255,.3);font-size:.8125rem">&copy; 2024 BareSober by Happi Gums &middot; Jodhpur, Rajasthan &middot; GSTIN: 08AAQFH6736A1ZA</p>
+  </div>
+
+  <!-- Right Auth Form -->
+  <div class="auth-right">
+    <div class="auth-form-box">
+      <h2 style="font-size:1.75rem;margin-bottom:8px">Welcome Back</h2>
+      <p style="margin-bottom:24px">Sign in to your account or create a new one.</p>
+
+      <!-- Method Tabs: Email vs OTP -->
+      <div style="display:flex;gap:10px;margin-bottom:24px">
+        <button class="pill active" id="method-email" onclick="switchMethod('email')">📧 Email</button>
+        <button class="pill" id="method-otp" onclick="switchMethod('otp')">📱 Mobile OTP</button>
+      </div>
+
+      <!-- Main Tabs: Login / Signup (email method) -->
+      <div id="email-section">
+        <div class="auth-tabs" id="auth-tabs">
+          <button class="auth-tab active" data-tab="login" onclick="switchTab('login')">Login</button>
+          <button class="auth-tab" data-tab="signup" onclick="switchTab('signup')">Sign Up</button>
+        </div>
+
+        <!-- Login Form -->
+        <form id="login-form" class="auth-form-section">
+          <div class="form-group" style="margin-bottom:16px">
+            <label class="form-label">Email Address</label>
+            <input type="email" id="login-email" class="form-input" placeholder="your@email.com" required>
+          </div>
+          <div class="form-group" style="margin-bottom:20px">
+            <label class="form-label">Password</label>
+            <input type="password" id="login-password" class="form-input" placeholder="••••••••" required>
+          </div>
+          <button type="submit" class="btn btn-primary w-full" id="login-btn">Login</button>
+          <p style="text-align:center;margin-top:16px;font-size:.875rem;color:var(--light-gray)">Don't have an account? <a href="#" onclick="switchTab('signup')" style="color:var(--gold)">Sign Up</a></p>
+        </form>
+
+        <!-- Signup Form -->
+        <form id="signup-form" class="auth-form-section" style="display:none">
+          <div class="form-group" style="margin-bottom:16px">
+            <label class="form-label">Full Name</label>
+            <input type="text" id="signup-name" class="form-input" placeholder="Your full name" required>
+          </div>
+          <div class="form-group" style="margin-bottom:16px">
+            <label class="form-label">Email Address</label>
+            <input type="email" id="signup-email" class="form-input" placeholder="your@email.com" required>
+          </div>
+          <div class="form-group" style="margin-bottom:20px">
+            <label class="form-label">Password</label>
+            <input type="password" id="signup-password" class="form-input" placeholder="Min. 6 characters" required>
+          </div>
+          <button type="submit" class="btn btn-primary w-full" id="signup-btn">Create Account</button>
+          <p style="text-align:center;margin-top:16px;font-size:.875rem;color:var(--light-gray)">Already have an account? <a href="#" onclick="switchTab('login')" style="color:var(--gold)">Login</a></p>
+        </form>
+      </div>
+
+      <!-- OTP Section -->
+      <div id="otp-section" style="display:none">
+        <div id="otp-step-1">
+          <div class="form-group" style="margin-bottom:16px">
+            <label class="form-label">Mobile Number</label>
+            <input type="tel" id="otp-mobile" class="form-input" placeholder="10-digit mobile number" maxlength="10">
+          </div>
+          <button type="button" class="btn btn-primary w-full" id="send-otp-btn">Send OTP</button>
+        </div>
+        <div id="otp-step-2" style="display:none">
+          <p style="margin-bottom:16px;font-size:.9375rem">OTP sent to <strong id="otp-mobile-display"></strong></p>
+          <div class="form-group" style="margin-bottom:16px">
+            <label class="form-label">Enter OTP</label>
+            <input type="text" id="otp-input" class="form-input" placeholder="6-digit OTP" maxlength="6" style="letter-spacing:.2em;font-size:1.25rem;text-align:center">
+          </div>
+          <div class="form-group" style="margin-bottom:20px">
+            <label class="form-label">Your Name (for new accounts)</label>
+            <input type="text" id="otp-name" class="form-input" placeholder="Your name (optional)">
+          </div>
+          <button type="button" class="btn btn-primary w-full" id="verify-otp-btn">Verify OTP</button>
+          <p style="text-align:center;margin-top:12px;font-size:.875rem"><a href="#" id="resend-otp-btn" style="color:var(--gold)">Resend OTP</a></p>
+        </div>
+      </div>
+
+      <p style="text-align:center;margin-top:24px;font-size:.8125rem;color:var(--light-gray)">
+        By continuing, you agree to BareSober's <a href="#" style="color:var(--gold)">Terms</a> and <a href="#" style="color:var(--gold)">Privacy Policy</a>.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script>
+// Redirect if already logged in
+if (BSAuth.isLoggedIn()) {
+  const redirect = new URLSearchParams(window.location.search).get('redirect');
+  window.location.href = redirect || '/';
+}
+
+function switchTab(tab) {
+  document.querySelectorAll('.auth-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+  document.getElementById('login-form').style.display = tab === 'login' ? 'block' : 'none';
+  document.getElementById('signup-form').style.display = tab === 'signup' ? 'block' : 'none';
+}
+
+function switchMethod(method) {
+  document.getElementById('method-email').classList.toggle('active', method === 'email');
+  document.getElementById('method-otp').classList.toggle('active', method === 'otp');
+  document.getElementById('email-section').style.display = method === 'email' ? 'block' : 'none';
+  document.getElementById('otp-section').style.display = method === 'otp' ? 'block' : 'none';
+}
+
+// Login
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('login-btn');
+  btn.classList.add('btn-loading');
+  try {
+    const { token, user } = await API.Auth.login({ email: document.getElementById('login-email').value, password: document.getElementById('login-password').value });
+    BSAuth.setSession(token, user);
+    Toast.success('Welcome back, ' + user.name + '!');
+    const redirect = new URLSearchParams(window.location.search).get('redirect');
+    setTimeout(() => window.location.href = redirect || '/', 1000);
+  } catch (err) { Toast.error(err.message); } finally { btn.classList.remove('btn-loading'); }
+});
+
+// Signup
+document.getElementById('signup-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('signup-btn');
+  btn.classList.add('btn-loading');
+  try {
+    const { token, user } = await API.Auth.signup({ name: document.getElementById('signup-name').value, email: document.getElementById('signup-email').value, password: document.getElementById('signup-password').value });
+    BSAuth.setSession(token, user);
+    Toast.success('Account created! Welcome to BareSober! 🌿');
+    setTimeout(() => window.location.href = '/', 1500);
+  } catch (err) { Toast.error(err.message); } finally { btn.classList.remove('btn-loading'); }
+});
+
+// OTP
+let otpMobile = '';
+document.getElementById('send-otp-btn').addEventListener('click', async () => {
+  otpMobile = document.getElementById('otp-mobile').value.trim();
+  if (!/^[6-9]\d{9}$/.test(otpMobile)) { Toast.error('Enter a valid 10-digit Indian mobile number'); return; }
+  const btn = document.getElementById('send-otp-btn');
+  btn.classList.add('btn-loading');
+  try {
+    const res = await API.Auth.sendOTP({ mobile: otpMobile });
+    document.getElementById('otp-step-1').style.display = 'none';
+    document.getElementById('otp-step-2').style.display = 'block';
+    document.getElementById('otp-mobile-display').textContent = otpMobile;
+    Toast.info('OTP sent!');
+    if (res.otp) Toast.info('Dev OTP: ' + res.otp, 10000); // Dev mode
+  } catch (err) { Toast.error(err.message); } finally { btn.classList.remove('btn-loading'); }
+});
+
+document.getElementById('verify-otp-btn').addEventListener('click', async () => {
+  const otp = document.getElementById('otp-input').value.trim();
+  const name = document.getElementById('otp-name').value.trim();
+  const btn = document.getElementById('verify-otp-btn');
+  btn.classList.add('btn-loading');
+  try {
+    const { token, user } = await API.Auth.verifyOTP({ mobile: otpMobile, otp, name });
+    BSAuth.setSession(token, user);
+    Toast.success('Verified! Welcome, ' + user.name + '! 🌿');
+    setTimeout(() => window.location.href = '/', 1500);
+  } catch (err) { Toast.error(err.message); } finally { btn.classList.remove('btn-loading'); }
+});
+
+document.getElementById('resend-otp-btn').addEventListener('click', async (e) => {
+  e.preventDefault();
+  try { await API.Auth.sendOTP({ mobile: otpMobile }); Toast.info('OTP resent!'); } catch (err) { Toast.error(err.message); }
+});
+</script>
+</body>
+</html>
